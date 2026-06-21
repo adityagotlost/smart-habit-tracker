@@ -4,7 +4,9 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Smart Habit Tracker</title>
+	<script src = "js/mood.js" defer></script>
 	<link rel="stylesheet" href="style.css">
+
 </head>
 <body>
 	<header class="topbar">
@@ -118,6 +120,77 @@
 				</article>
 			</div>
 		</section>
+
+
+
+	<section id="mood-logger" class="dashboard-card">
+    <header class="dashboard-header">
+        <div>
+            <p class="dashboard-kicker">Track Your Mind</p>
+            <h3>Daily Mood Logger</h3>
+        </div>
+    </header>
+
+    <div class="dashboard-grid">
+        <article class="panel panel-large">
+            <h3>How are you feeling today?</h3>
+            <form id="mood-form">
+                
+        <div class="mood-selector">
+    	<label class="mood-option" data-value="1">
+        <input type="radio" name="mood-rating" value="1">
+        <span class="emoji">😢</span>
+        <span class="mood-label">1</span>
+    </label>
+    	<label class="mood-option" data-value="2">
+        <input type="radio" name="mood-rating" value="2">
+        <span class="emoji">🙁</span>
+        <span class="mood-label">2</span>
+    </label>
+   		<label class="mood-option" data-value="3">
+        <input type="radio" name="mood-rating" value="3">
+        <span class="emoji">😐</span>
+        <span class="mood-label">3</span>
+    </label>
+    	<label class="mood-option" data-value="4">
+        <input type="radio" name="mood-rating" value="4">
+        <span class="emoji">🙂</span>
+        <span class="mood-label">4</span>
+    </label>
+    	<label class="mood-option" data-value="5">
+        <input type="radio" name="mood-rating" value="5">
+        <span class="emoji">😀</span>
+        <span class="mood-label">5</span>
+    </label>
+</div>
+
+                <div class="form-group">
+                    <label for="mood-note" class="input-label">Add a note</label>
+                    <textarea id="mood-note" rows="3" placeholder="What made you feel this way?"></textarea>
+                </div>
+
+                <button type="submit" class="primary-button submit-btn">Save Entry</button>
+            </form>
+        </article>
+
+        <article class="panel panel-wide history-panel">
+            <h3>Mood History</h3>
+            <div id="mood-history-list" class="history-list">
+                
+                <div class="history-item">
+                    <div class="history-left">
+                        <span class="history-emoji">😀</span>
+                        <div class="history-details">
+                            <p class="history-date">Today, 10:15 AM</p>
+                            <p class="history-note">Had a highly productive morning routine!</p>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+        </article>
+    </div>
+</section>
 	</main>
 </body>
 </html>
