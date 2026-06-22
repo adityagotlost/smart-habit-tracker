@@ -113,11 +113,23 @@
 					<p>Record how the day feels.</p>
 				</article>
 				<article class="panel panel-wide">
-					<h3>Analytics</h3>
-					<p>Use this area for charts, stats, and longer-term trend insights.</p>
-				</article>
+    <h3>Analytics Dashboard</h3>
+
+    <p>Habit Completion: <span id="completionPercent">0%</span></p>
+
+    <canvas id="weeklyChart"></canvas>
+    <br><br>
+
+    <canvas id="focusChart"></canvas>
+    <br><br>
+
+    <canvas id="moodChart"></canvas>
+</article>
 			</div>
 		</section>
 	</main>
+	<script
+	 src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/analytics.js"></script>
 </body>
 </html>

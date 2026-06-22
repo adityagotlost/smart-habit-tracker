@@ -455,3 +455,13 @@ h1 {
 		padding-inline: 0.82rem;
 	}
 }
+#completionPercent{
+    font-size:24px;
+    font-weight:bold;
+}
+
+canvas{
+    width:100% !important;
+    max-height:300px;
+    margin-top:20px;
+}
