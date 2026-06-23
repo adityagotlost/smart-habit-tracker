@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Smart Habit Tracker</title>
 	<script src = "js/mood.js" defer></script>
 	<link rel="stylesheet" href="style.css">
-
+	<script src="js/timer.js" defer></script>
+	<script src="js/analytics.js" defer></script>
+	<script src="js/app.js" defer></script>
 </head>
+
 <body>
 	<header class="topbar">
 		<div class="brand-lockup">
@@ -31,7 +35,8 @@
 			<div class="hero-copy-block">
 				<p class="eyebrow">Smart Habit Tracker</p>
 				<h1>Build routines that actually stick.</h1>
-				<p class="hero-copy">Track habits, keep streaks alive, and stay on top of your day with a single focused page that feels calm and easy to use.</p>
+				<p class="hero-copy">Track habits, keep streaks alive, and stay on top of your day with a single focused
+					page that feels calm and easy to use.</p>
 				<div class="hero-actions">
 					<a class="primary-button" href="#dashboard">Open Dashboard</a>
 					<a class="secondary-button" href="#features">See Features</a>
@@ -62,7 +67,8 @@
 				<p class="eyebrow">Features</p>
 				<h2 id="features-title">Everything you need in one place.</h2>
 			</div>
-			<p class="section-copy">The layout keeps the important actions visible first, then gives you enough room for habits, streaks, and insights.</p>
+			<p class="section-copy">The layout keeps the important actions visible first, then gives you enough room for
+				habits, streaks, and insights.</p>
 		</section>
 
 		<section id="features" class="feature-grid">
@@ -85,7 +91,8 @@
 				<p class="eyebrow">Dashboard</p>
 				<h2 id="dashboard-title">A cleaner view of progress.</h2>
 			</div>
-			<p class="section-copy">Each panel has a job, so the page feels more like a real product and less like a placeholder layout.</p>
+			<p class="section-copy">Each panel has a job, so the page feels more like a real product and less like a
+				placeholder layout.</p>
 		</section>
 
 		<section id="dashboard" class="dashboard-card">
@@ -98,14 +105,76 @@
 			</header>
 
 			<div class="dashboard-grid">
-				<article class="panel panel-large">
-					<h3>Today</h3>
-					<p>Today's summary, checklist, and quick progress snapshot.</p>
+				<article class="panel panel-large advanced-tracker" id="today-panel">
+					<header class="tracker-header">
+						<div>
+							<h3>My Routines</h3>
+							<p class="tracker-instructions">Organize, prioritize, and track your daily rhythm.</p>
+						</div>
+						<div class="progress-ring-box">
+							<svg class="progress-ring" width="54" height="54">
+								<circle class="progress-ring__circle-bg" stroke="var(--border)" stroke-width="4" fill="transparent" r="22" cx="27" cy="27"/>
+								<circle class="progress-ring__circle" id="tracker-progress-ring" stroke="var(--accent)" stroke-width="4" fill="transparent" r="22" cx="27" cy="27"/>
+							</svg>
+							<span id="progress-text">0%</span>
+						</div>
+					</header>
+
+					<div class="habit-form-deck" id="habit-form-deck">
+						<input type="hidden" id="edit-target-id" value="">
+						
+						<div class="input-row-main">
+							<input type="text" id="new-habit-input" placeholder="What habit are we working on?..." autocomplete="off">
+							<button id="add-habit-btn" class="action-submit-btn">Add</button>
+						</div>
+						
+						<div class="input-row-meta">
+							<div class="meta-field">
+								<label for="habit-category">Category</label>
+								<select id="habit-category">
+									<option value="Health">🏥 Health</option>
+									<option value="Study">📚 Study</option>
+									<option value="Fitness">💪 Fitness</option>
+								</select>
+							</div>
+							<div class="meta-field">
+								<label for="habit-priority">Priority</label>
+								<select id="habit-priority">
+									<option value="1">🔴 High</option>
+									<option value="2" selected>🟡 Medium</option>
+									<option value="3">🔵 Low</option>
+								</select>
+							</div>
+							<button id="cancel-edit-btn" class="hidden-btn">Cancel Edit</button>
+						</div>
+					</div>
+
+					<div id="habit-list" class="sortable-list"></div>
 				</article>
-				<article class="panel">
-					<h3>Timer</h3>
-					<p>Focused work or habit timing area.</p>
+
+				<article class="panel" id="timer-panel">
+					<h3>Focus Timer</h3>
+
+					<div class="timer-display-wrapper">
+						<svg class="timer-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+							<circle class="timer-track" cx="50" cy="50" r="45"></circle>
+							<circle class="timer-progress" id="timer-circle" cx="50" cy="50" r="45"></circle>
+						</svg>
+						<div class="timer-time" id="time-display">25:00</div>
+					</div>
+
+					<div class="timer-modes">
+						<button id="mode-work" class="active">Work (25m)</button>
+						<button id="mode-break">Break (5m)</button>
+					</div>
+
+					<div class="timer-controls">
+						<button id="btn-start" class="primary-button">Start</button>
+						<button id="btn-reset" class="secondary-button">Reset</button>
+					</div>
+					<p class="timer-expand-hint" aria-hidden="true">⤢ Click to expand</p>
 				</article>
+
 				<article class="panel">
 					<h3>Streaks</h3>
 					<p>Keep consistency visible.</p>
@@ -114,9 +183,15 @@
 					<h3>Mood</h3>
 					<p>Record how the day feels.</p>
 				</article>
-				<article class="panel panel-wide">
+				
+				<article class="panel panel-wide" id="analytics-panel">
 					<h3>Analytics</h3>
-					<p>Use this area for charts, stats, and longer-term trend insights.</p>
+					<p>Habit Completion: <span id="completionPercent">0%</span></p>
+					<canvas id="weeklyChart"></canvas>
+					<br><br>
+					<canvas id="focusChart"></canvas>
+					<br><br>
+					<canvas id="moodChart"></canvas>
 				</article>
 			</div>
 		</section>
@@ -192,5 +267,36 @@
     </div>
 </section>
 	</main>
+
+	<div class="timer-overlay" id="timer-overlay" role="dialog" aria-modal="true" aria-label="Focus Timer">
+		<div class="timer-modal" id="timer-modal">
+			<button class="timer-modal-close" id="timer-overlay-close" aria-label="Close focus timer">✕</button>
+			<p class="timer-modal-kicker">Focus Mode</p>
+			<h2 class="timer-modal-title">Stay in the zone.</h2>
+
+			<div class="timer-display-wrapper">
+				<svg class="timer-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+					<circle class="timer-track" cx="50" cy="50" r="45"></circle>
+					<circle class="timer-progress" id="timer-circle-expanded" cx="50" cy="50" r="45"></circle>
+				</svg>
+				<div class="timer-time" id="time-display-expanded">25:00</div>
+			</div>
+
+			<div class="timer-modes">
+				<button id="mode-work-expanded" class="active">Work (25m)</button>
+				<button id="mode-break-expanded">Break (5m)</button>
+			</div>
+
+			<div class="timer-controls">
+				<button id="btn-start-expanded" class="primary-button">Start</button>
+				<button id="btn-reset-expanded" class="secondary-button">Reset</button>
+			</div>
+
+			<p class="timer-modal-status" id="timer-modal-status">Ready when you are.</p>
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
+
 </html>
