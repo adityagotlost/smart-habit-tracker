@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Smart Habit Tracker</title>
+	<script src = "js/mood.js" defer></script>
 	<link rel="stylesheet" href="style.css">
 	<script src="js/timer.js" defer></script>
 	<script src="js/analytics.js" defer></script>
@@ -104,10 +105,53 @@
 			</header>
 
 			<div class="dashboard-grid">
-				<article class="panel panel-large">
-					<h3>Today</h3>
-					<p>Today's summary, checklist, and quick progress snapshot.</p>
+				<article class="panel panel-large advanced-tracker" id="today-panel">
+					<header class="tracker-header">
+						<div>
+							<h3>My Routines</h3>
+							<p class="tracker-instructions">Organize, prioritize, and track your daily rhythm.</p>
+						</div>
+						<div class="progress-ring-box">
+							<svg class="progress-ring" width="54" height="54">
+								<circle class="progress-ring__circle-bg" stroke="var(--border)" stroke-width="4" fill="transparent" r="22" cx="27" cy="27"/>
+								<circle class="progress-ring__circle" id="tracker-progress-ring" stroke="var(--accent)" stroke-width="4" fill="transparent" r="22" cx="27" cy="27"/>
+							</svg>
+							<span id="progress-text">0%</span>
+						</div>
+					</header>
+
+					<div class="habit-form-deck" id="habit-form-deck">
+						<input type="hidden" id="edit-target-id" value="">
+						
+						<div class="input-row-main">
+							<input type="text" id="new-habit-input" placeholder="What habit are we working on?..." autocomplete="off">
+							<button id="add-habit-btn" class="action-submit-btn">Add</button>
+						</div>
+						
+						<div class="input-row-meta">
+							<div class="meta-field">
+								<label for="habit-category">Category</label>
+								<select id="habit-category">
+									<option value="Health">🏥 Health</option>
+									<option value="Study">📚 Study</option>
+									<option value="Fitness">💪 Fitness</option>
+								</select>
+							</div>
+							<div class="meta-field">
+								<label for="habit-priority">Priority</label>
+								<select id="habit-priority">
+									<option value="1">🔴 High</option>
+									<option value="2" selected>🟡 Medium</option>
+									<option value="3">🔵 Low</option>
+								</select>
+							</div>
+							<button id="cancel-edit-btn" class="hidden-btn">Cancel Edit</button>
+						</div>
+					</div>
+
+					<div id="habit-list" class="sortable-list"></div>
 				</article>
+
 				<article class="panel" id="timer-panel">
 					<h3>Focus Timer</h3>
 
@@ -130,6 +174,7 @@
 					</div>
 					<p class="timer-expand-hint" aria-hidden="true">⤢ Click to expand</p>
 				</article>
+
 				<article class="panel">
 					<h3>Streaks</h3>
 					<p>Keep consistency visible.</p>
@@ -150,6 +195,77 @@
 				</article>
 			</div>
 		</section>
+
+
+
+	<section id="mood-logger" class="dashboard-card">
+    <header class="dashboard-header">
+        <div>
+            <p class="dashboard-kicker">Track Your Mind</p>
+            <h3>Daily Mood Logger</h3>
+        </div>
+    </header>
+
+    <div class="dashboard-grid">
+        <article class="panel panel-large">
+            <h3>How are you feeling today?</h3>
+            <form id="mood-form">
+                
+        <div class="mood-selector">
+    	<label class="mood-option" data-value="1">
+        <input type="radio" name="mood-rating" value="1">
+        <span class="emoji">😢</span>
+        <span class="mood-label">1</span>
+    </label>
+    	<label class="mood-option" data-value="2">
+        <input type="radio" name="mood-rating" value="2">
+        <span class="emoji">🙁</span>
+        <span class="mood-label">2</span>
+    </label>
+   		<label class="mood-option" data-value="3">
+        <input type="radio" name="mood-rating" value="3">
+        <span class="emoji">😐</span>
+        <span class="mood-label">3</span>
+    </label>
+    	<label class="mood-option" data-value="4">
+        <input type="radio" name="mood-rating" value="4">
+        <span class="emoji">🙂</span>
+        <span class="mood-label">4</span>
+    </label>
+    	<label class="mood-option" data-value="5">
+        <input type="radio" name="mood-rating" value="5">
+        <span class="emoji">😀</span>
+        <span class="mood-label">5</span>
+    </label>
+</div>
+
+                <div class="form-group">
+                    <label for="mood-note" class="input-label">Add a note</label>
+                    <textarea id="mood-note" rows="3" placeholder="What made you feel this way?"></textarea>
+                </div>
+
+                <button type="submit" class="primary-button submit-btn">Save Entry</button>
+            </form>
+        </article>
+
+        <article class="panel panel-wide history-panel">
+            <h3>Mood History</h3>
+            <div id="mood-history-list" class="history-list">
+                
+                <div class="history-item">
+                    <div class="history-left">
+                        <span class="history-emoji">😀</span>
+                        <div class="history-details">
+                            <p class="history-date">Today, 10:15 AM</p>
+                            <p class="history-note">Had a highly productive morning routine!</p>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+        </article>
+    </div>
+</section>
 	</main>
 
 	<div class="timer-overlay" id="timer-overlay" role="dialog" aria-modal="true" aria-label="Focus Timer">
