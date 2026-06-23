@@ -138,9 +138,15 @@
 					<h3>Mood</h3>
 					<p>Record how the day feels.</p>
 				</article>
+				
 				<article class="panel panel-wide" id="analytics-panel">
 					<h3>Analytics</h3>
-					<p>Use this area for charts, stats, and longer-term trend insights.</p>
+					<p>Habit Completion: <span id="completionPercent">0%</span></p>
+					<canvas id="weeklyChart"></canvas>
+					<br><br>
+					<canvas id="focusChart"></canvas>
+					<br><br>
+					<canvas id="moodChart"></canvas>
 				</article>
 			</div>
 		</section>
@@ -173,6 +179,8 @@
 			<p class="timer-modal-status" id="timer-modal-status">Ready when you are.</p>
 		</div>
 	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 
 </html>
