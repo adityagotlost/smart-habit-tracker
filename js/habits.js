@@ -1,12 +1,11 @@
-// --- HIGH ENGINE SMART HABIT TRACKER COMPONENT ---
+
 (function() {
-    // Systems Cache Initialization
     let habits = JSON.parse(localStorage.getItem('sm_tracker_habits')) || [
         { id: 1, name: "Cardio Interval Training", category: "Fitness", priority: "1", completed: false, order: 0 },
         { id: 2, name: "Read Design Systems Documentation", category: "Study", priority: "2", completed: true, order: 1 }
     ];
 
-    // Node Registries
+   
     const habitList = document.getElementById('habit-list');
     const inputField = document.getElementById('new-habit-input');
     const categoryField = document.getElementById('habit-category');
@@ -17,7 +16,7 @@
     const progressRing = document.getElementById('tracker-progress-ring');
     const progressText = document.getElementById('progress-text');
 
-    // Circle Sizing Constants
+    
     const radius = progressRing.r.baseVal.value;
     const circumference = radius * 2 * Math.PI;
     progressRing.style.strokeDasharray = `${circumference} ${circumference}`;
@@ -33,18 +32,17 @@
         render();
     }
 
-    // Builder Engine Template Render
     function render() {
         habitList.innerHTML = '';
         
-        // Sorting Algorithm: Complete status elements sink down, active elements stay sorted by index rank
+        
         const sortedHabits = [...habits].sort((a, b) => {
             if (a.completed !== b.completed) return a.completed ? 1 : -1;
             return a.order - b.order;
         });
 
         if (sortedHabits.length === 0) {
-            habitList.innerHTML = `<p style="color: var(--muted); font-style: italic; text-align: center; margin: 20px 0;">Your routine profile is empty. Let's add something!</p>`;
+            habitList.innerHTML = `<p style="color: muted; font-style: italic; text-align: center; margin: 20px 0;">Your routine profile is empty. Let's add something!</p>`;
             setProgress(0);
             return;
         }
@@ -74,14 +72,12 @@
             habitList.appendChild(row);
         });
 
-        // Compute Completion Percentage Slices
         const total = habits.length;
         const completedCount = habits.filter(h => h.completed).length;
         setProgress(total > 0 ? Math.round((completedCount / total) * 100) : 0);
         initDragAndDrop();
     }
 
-    // Processing Form Commands
     function processForm() {
         const titleText = inputField.value.trim();
         if (!titleText) return;
@@ -89,7 +85,6 @@
         const targetId = editTargetId.value;
 
         if (targetId) {
-            // Edit execution block
             const matchedIndex = habits.findIndex(h => h.id === parseInt(targetId));
             if (matchedIndex !== -1) {
                 habits[matchedIndex].name = titleText;
@@ -98,7 +93,6 @@
             }
             clearFormState();
         } else {
-            // Create target blueprint routing
             const item = {
                 id: Date.now(),
                 name: titleText,
@@ -134,7 +128,6 @@
         cancelEditBtn.style.display = 'none';
     }
 
-    // Drag and Drop Sorting Engine
     function initDragAndDrop() {
         const items = habitList.querySelectorAll('.habit-item:not(.is-completed)');
         
@@ -142,7 +135,6 @@
             item.addEventListener('dragstart', () => item.classList.add('dragging'));
             item.addEventListener('dragend', () => {
                 item.classList.remove('dragging');
-                // Capture new ordering position indices on release
                 const finalRows = Array.from(habitList.querySelectorAll('.habit-item'));
                 finalRows.forEach((row, index) => {
                     const rowId = parseInt(row.getAttribute('data-id'));
@@ -158,7 +150,6 @@
             const afterElement = getDragAfterElement(habitList, e.clientY);
             const draggingEl = document.querySelector('.dragging');
             if (!draggingEl) return;
-            
             if (afterElement == null) {
                 habitList.appendChild(draggingEl);
             } else {
@@ -180,8 +171,7 @@
         }, { offset: Number.NEGATIVE_INFINITY }).element;
     }
 
-    // Structural Intercept Event Mapping
-    habitList.addEventListener('click', e => {
+      habitList.addEventListener('click', e => {
         const targetRow = e.target.closest('.habit-item');
         if (!targetRow) return;
         const targetId = parseInt(targetRow.getAttribute('data-id'));
@@ -209,7 +199,5 @@
             tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
         );
     }
-
-    // Run Engine
-    render();
-})();
+     render();
+    })();
