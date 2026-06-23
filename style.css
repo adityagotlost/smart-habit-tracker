@@ -636,6 +636,16 @@ h1 {
 	stroke-dashoffset: 0;
 	transition: stroke-dashoffset 1s linear;
 }
+#completionPercent{
+    font-size:24px;
+    font-weight:bold;
+}
+
+canvas{
+    width:100% !important;
+    max-height:300px;
+    margin-top:20px;
+}
 
 .timer-time {
 	position: absolute;
